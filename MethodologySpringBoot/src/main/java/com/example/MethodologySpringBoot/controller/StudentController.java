@@ -44,5 +44,24 @@ public class StudentController {
         studentService.deleteStudent(id);
     }
 
+    // UPDATE
+    @PutMapping(path = "/edit/{id}")
+    public ResponseEntity<Student> updateStudentInfo(@PathVariable Integer id, @RequestBody Student student) {
+        // base case
+        try {
+            Student existingStudent = studentService.getStudentById(id);
+            existingStudent.setFirst_name(student.getFirst_name());
+            existingStudent.setLast_name(student.getLast_name());
+            existingStudent.setEmail(student.getEmail());
+            existingStudent.setMajor(student.getMajor());
+
+            studentService.addStudent(existingStudent);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
 }
