@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/student")
@@ -64,4 +65,33 @@ public class StudentController {
         }
     }
 
+
+//    GET for SPQ
+    @GetMapping(path = "/spq")
+    public List<Student> getStudentByIdSPQ() {
+        return studentService.getAllStudentSPQ();
+    }
+
+    // POST for SPQ
+    @PostMapping(path = "/spq")
+    public void addStudentSPQ(Student student) {
+        studentService.addStudentSPQ(student);
+    }
+
+    // DELETE for SPQ
+    @DeleteMapping(path = "spq/{id}")
+    public void deleteStudentSPQ(@PathVariable Integer id) {
+        studentService.deleteStudentSPQ(id);
+    }
+
+    @PutMapping(path = "updatespq/{id}")
+    public void updateStudentSPQ(@PathVariable Integer id, @RequestBody Student student) {
+        studentService.editStudentSPQ(id, student);
+    }
+
+    // GET for SPQ by id
+    @GetMapping(path = "spq/{id}")
+    public Optional getStudentByIdSPQ(@PathVariable Integer id) {
+        return studentService.getStudentByIdSPQ(id);
+    }
 }

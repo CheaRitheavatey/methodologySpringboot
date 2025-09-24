@@ -1,8 +1,11 @@
 package com.example.MethodologySpringBoot.repository;
 
 import com.example.MethodologySpringBoot.model.Student;
+import jakarta.persistence.StoredProcedureQuery;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student,Integer> {
@@ -11,4 +14,6 @@ public interface StudentRepository extends JpaRepository<Student,Integer> {
     // use data from database as native java obj
     // we have access to predefined method by using jpa
     // it provide query language support
+
+
 }
