@@ -32,3 +32,28 @@
   **API endpoint**
   - is a point of entry
   example: base url: localhost:8080 and the endpoint: /student
+
+01.10.2025
+**interface:**
+- hide the detail
+- sth that can be shared among classes
+- reference type
+- can be constants, method signature, default method, static method, nested type
+- interface cannot be instatiated, other class can implement the interface and then provide the implementation by the class
+- interface extend another interface need to add other function
+- interface have no constructor cuz u cannot use to make an object
+- for constant it by default: public, static , final
+- for method by default: public, abstract
+- for default method, you can add body inside interface java 8 onward.
+- why default method?
+- can have somesort of implementation, if we dont have nothing to do with it. especially for big project.
+- java 8 also add static method inside interface
+- marker or tagg interface: interface that has no member
+- interface can be nested
+
+-    ** interface           vs             abstract**
+- no constructor                     - have constructor
+- final/constant                     - attribute
+- creating connection
+between non related class            - connecting related class
+
