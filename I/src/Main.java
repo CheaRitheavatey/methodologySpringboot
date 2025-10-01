@@ -9,7 +9,7 @@ public class Main{
         square.draw();
         square.resize(200);
 
-        
+
     }
 }
 
