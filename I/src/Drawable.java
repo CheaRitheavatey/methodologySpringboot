@@ -7,7 +7,7 @@ public interface Drawable {
     // nest interface
     interface Resizable {
         int MAX_RESIZE_PERCENTAGE = 500;
-        void resize();
+        void resize(int percentage);
     }
 }
 
