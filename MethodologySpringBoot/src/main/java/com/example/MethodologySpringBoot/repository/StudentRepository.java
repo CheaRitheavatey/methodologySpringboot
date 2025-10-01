@@ -15,5 +15,8 @@ public interface StudentRepository extends JpaRepository<Student,Integer> {
     // we have access to predefined method by using jpa
     // it provide query language support
 
+    // default method
+//    default void getStudentName(Integer id, String name) {}
+
 
 }
