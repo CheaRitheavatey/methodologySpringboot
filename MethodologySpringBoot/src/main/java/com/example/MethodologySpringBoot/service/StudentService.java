@@ -2,13 +2,11 @@ package com.example.MethodologySpringBoot.service;
 
 import com.example.MethodologySpringBoot.model.Student;
 import com.example.MethodologySpringBoot.repository.StudentRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.ParameterMode;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.StoredProcedureQuery;
+import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -102,5 +100,21 @@ public class StudentService {
 
     }
 
+    public Integer countStudent() {
+        StoredProcedureQuery spq = entityManager.createStoredProcedureQuery("countStudent");
+        spq.registerStoredProcedureParameter("countOUT", Integer.class, ParameterMode.OUT);
+
+        // return an obj therefore we need typecasting
+        return (Integer) spq.getOutputParameterValue("countOUT");
+    }
+
+    public List<Student> findStudentByLastName(String lastName) {
+        List<Student> result = studentRepository.findStudentByLastName(lastName);
+        if (CollectionUtils.isEmpty(result)) {
+            throw new NoResultException();
+        } else {
+            return result;
+        }
+    }
 
 }

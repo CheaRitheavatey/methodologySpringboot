@@ -3,6 +3,8 @@ package com.example.MethodologySpringBoot.repository;
 import com.example.MethodologySpringBoot.model.Student;
 import jakarta.persistence.StoredProcedureQuery;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,6 +19,10 @@ public interface StudentRepository extends JpaRepository<Student,Integer> {
 
     // default method
 //    default void getStudentName(Integer id, String name) {}
+
+    @Query(value = "SELECT s FROM student s WHERE s.last_name = :lastName")
+    List<Student> findStudentByLastName(@Param("lastName") String lastName);
+
 
 
 }

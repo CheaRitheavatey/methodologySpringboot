@@ -94,4 +94,15 @@ public class StudentController {
     public Optional getStudentByIdSPQ(@PathVariable Integer id) {
         return studentService.getStudentByIdSPQ(id);
     }
+
+    // GET number of student
+    @GetMapping(path = "/countstudent")
+    public Integer getCountStudent() {
+        return studentService.countStudent();
+    }
+
+    @GetMapping(path = "lastname")
+    public List<Student> findStudentByLastName(@RequestBody String lastName) {
+        return studentService.findStudentByLastName(lastName);
+    }
 }
