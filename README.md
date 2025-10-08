@@ -57,3 +57,46 @@
 - creating connection
 between non related class            - connecting related class
 
+
+08.10.2025
+annotation: decoration that applied to java construct such as class, method or fields that associate metadata witht the construct
+
+**standard built annoattion**
+- genral purpose (@override, @suppresswarnings)
+- meta annotation (@documented, @target, @inherited, @retention, @repeatable) = we use this to create new annotation
+
+**categories of annotation**
+- marker annotation (contain no member) example, @Override
+- single value annotation (contain only 1 member) example, @Schedule('monday')
+- full annotation (contain mutiple member) example, @Schedule(day = 'monday', month = 'june')
+- type annotation () example, @Id private Integer id 
+- repeating annotation (have same annotation and use it many time ) @role('employee'), @role('student')
+
+  create annotation
+  need 2 things:
+  1. retention policy (3 standard retention: source, class, runtime)
+  2. target: specify which java construct an annotation can be applied (chea ey ke: constructor, field, local var, method, ... this is the type)
+
+step for creating annotation
+1. declare it by using @interface
+2. use it 
+
+class level
+@Retention(RententionPolicy.RUNTIME) // runtime, source, ...
+@Target(ElementType.Type)
+public @interface Name {}
+
+field level
+@Retention(RententionPolicy.RUNTIME) // runtime, source, ...
+@Target(ElementType.FIELD)
+public @interface Name {
+  public String key() default"";
+}
+
+method level
+@Retention(RententionPolicy.RUNTIME) // runtime, source, ...
+@Target(ElementType.METHOD)
+public @interface Name {
+  // ber mean member add ber ot te mbach dak te 
+}
+
