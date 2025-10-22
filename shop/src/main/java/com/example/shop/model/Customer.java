@@ -6,14 +6,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "provider")
+@Table(name = "customer")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Provider implements Serializable {
+public class Customer implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,18 +22,18 @@ public class Provider implements Serializable {
 
     private String firstName;
     private String lastName;
-
-    @Column(nullable = false)
-    private String accountNumber;
+    private String address;
 
     @Column(nullable = false, unique = true)
     private String email;
 
+    @Temporal(TemporalType.DATE)
+    private Date dateOfBirth;
+
     @Column(nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL)
-    private List<ProviderProduct> providerProducts;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<Order> orders;
 
-    // getters and setters
 }

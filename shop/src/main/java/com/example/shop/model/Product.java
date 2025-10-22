@@ -6,33 +6,36 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
-@Table(name = "provider")
+@Table(name = "product")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Provider implements Serializable {
+public class Product implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String firstName;
-    private String lastName;
+    @Column(nullable = false)
+    private String title;
+
+    @Lob
+    private String description;
 
     @Column(nullable = false)
-    private String accountNumber;
-
-    @Column(nullable = false, unique = true)
-    private String email;
+    private String imgUrl;
 
     @Column(nullable = false)
-    private String password;
+    private BigDecimal price;
 
-    @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<OrderProduct> orderProducts;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProviderProduct> providerProducts;
 
-    // getters and setters
 }
