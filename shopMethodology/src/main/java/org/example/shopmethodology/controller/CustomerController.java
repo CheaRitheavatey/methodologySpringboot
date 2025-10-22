@@ -1,8 +1,8 @@
-package com.example.shop.controller;
+package org.example.shopmethodology.controller;
 
-import com.example.shop.model.Customer;
-import com.example.shop.service.CustomerService;
 import lombok.AllArgsConstructor;
+import org.example.shopmethodology.model.Customer;
+import org.example.shopmethodology.service.CustomerService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
