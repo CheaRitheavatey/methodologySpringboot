@@ -42,7 +42,7 @@ public class InvalidAgeException extends Exception {
                 throw new IncorrectFilePath("incorrect file path");
             System.out.println(e.getMessage());
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            throw new IncorrectFileExtension("incorrect extension");
         }
 
     }
@@ -89,4 +89,9 @@ class IncorrectFilePath extends Exception {
     IncorrectFilePath(String message, Throwable err) {
         super(message, err);
     }
+}
+
+// this will be uncheck because it is extends from run time
+class IncorrectFileExtension extends RuntimeException {
+    IncorrectFileExtension(String message) {}
 }
