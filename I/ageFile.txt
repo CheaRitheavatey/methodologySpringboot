@@ -1,0 +1,4 @@
+Nov 05, 2025 1:22:35 PM Logging main
+FINER: checking age...
+Nov 05, 2025 1:22:35 PM Logging main
+FINE: the age check successfully!
