@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-//@AllArgsConstructor
+@AllArgsConstructor
 public class AdoptionService {
     private AdoptionRepository adoptionRepository;
     private PetRepository petRepository;
