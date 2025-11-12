@@ -1,10 +1,12 @@
 package org.example.shopmethodology.aspect;
 
+import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 
 import java.nio.file.AccessDeniedException;
 import java.util.Collection;
@@ -12,9 +14,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
+@Aspect
+@Component
 public class HasAuthoritiesAspect {
     static Logger logger = Logger.getLogger("org.example.shopmethodology.aspect");
-    @Before("within(@org.springframework.web.bind.annotation.RestController ') && @annotation(authorities)")
+    @Before("within(@org.springframework.web.bind.annotation.RestController ) && @annotation(authorities)")
     public void hasAuthorities(final HasAuthorities authorities) throws AccessDeniedException, AuthenticationCredentialsNotFoundException, Exception {
         // securityContext : hold information user authentication
         final SecurityContext securityContext = SecurityContextHolder.getContext();

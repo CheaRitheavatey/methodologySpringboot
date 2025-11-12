@@ -1,12 +1,17 @@
+import designPattern.abstractFactory.PCFactory;
+import designPattern.abstractFactory.ServerFactory;
 import designPattern.creatioinal.Computer;
 import designPattern.creatioinal.ComputerFactory;
 import designPattern.singleton.Singleton;
 
 public class Main{
     public static void main(String[] args) {
+        testBuilder();
+//        testAbstractFactory();
 
-        TestDesignPattern.testFactory();
-        TestDesignPattern.testSingleton();
+//        TestDesignPattern.testFactory();
+//        TestDesignPattern.testSingleton();
+
         Printer printer = new Printer("Epson");
 //        printer.draw();
 //        printer.print();
@@ -16,6 +21,22 @@ public class Main{
 //        square.resize(200);
 
 
+    }
+
+    private static void testAbstractFactory() {
+        designPattern.abstractFactory.Computer pc = designPattern.abstractFactory.ComputerFactory.getComputer(new PCFactory("6 GB", "200 GB"));
+        designPattern.abstractFactory.Computer server = designPattern.abstractFactory.ComputerFactory.getComputer(new ServerFactory("16 GB", "256 GB"));
+
+        System.out.println(pc.getClass().getName() + ": pc");
+        System.out.println(server.getClass().getName() + ": server");
+    }
+
+    private static void testBuilder() {
+        designPattern.builder.Computer c = new designPattern.builder.Computer.ComputerBuilder("10 GB", "128 GB").setGraphiccardEnable(true).build();
+
+        System.out.println(c.getRam());
+        System.out.println(c.isGraphiccardEnable());
+        System.out.println(c.isBluetoothEnable());
     }
 }
 
