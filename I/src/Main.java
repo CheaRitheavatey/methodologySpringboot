@@ -1,13 +1,19 @@
+import designPattern.creatioinal.Computer;
+import designPattern.creatioinal.ComputerFactory;
+import designPattern.singleton.Singleton;
+
 public class Main{
     public static void main(String[] args) {
 
+        TestDesignPattern.testFactory();
+        TestDesignPattern.testSingleton();
         Printer printer = new Printer("Epson");
-        printer.draw();
-        printer.print();
+//        printer.draw();
+//        printer.print();
 
         Shape square = new Shape("Square", "Blue");
-        square.draw();
-        square.resize(200);
+//        square.draw();
+//        square.resize(200);
 
 
     }
@@ -88,4 +94,24 @@ class Printer implements Printable {
         return Printable.super.getPaerSize();
     }
 
+}
+
+class TestDesignPattern {
+    // it should be private but i want to test it in main class
+    protected static void testFactory() {
+        Computer pc = ComputerFactory.getComputer("16 GB", "2 TB", "pc");
+        Computer server = ComputerFactory.getComputer("32 GB", "1 TB", "server");
+
+        System.out.println(pc.getClass().getName() + "Factory pc config: "  + pc);
+        System.out.println(server.getClass().getName() + "Factory server config: "  + server);
+    }
+
+    protected static void testSingleton() {
+        // both hashcode should refer to the samememory locaton
+        Singleton x = Singleton.getInstance();
+        Singleton y = Singleton.getInstance();
+
+        System.out.println("hascode of x "  +x);
+        System.out.println("hascode of y "  +y);
+    }
 }
