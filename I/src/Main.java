@@ -2,11 +2,15 @@ import designPattern.abstractFactory.PCFactory;
 import designPattern.abstractFactory.ServerFactory;
 import designPattern.creatioinal.Computer;
 import designPattern.creatioinal.ComputerFactory;
+import designPattern.prototype.Employee;
 import designPattern.singleton.Singleton;
+
+import java.util.List;
 
 public class Main{
     public static void main(String[] args) {
-        testBuilder();
+        testPrototype();
+//        testBuilder();
 //        testAbstractFactory();
 
 //        TestDesignPattern.testFactory();
@@ -37,6 +41,20 @@ public class Main{
         System.out.println(c.getRam());
         System.out.println(c.isGraphiccardEnable());
         System.out.println(c.isBluetoothEnable());
+    }
+
+    private static void testPrototype() {
+        Employee employee = new Employee();
+        employee.loadData();
+
+        // create a new object from already exisiting object
+        Employee employee1 = (Employee) employee.clone();
+//        List<String> list1 = employee1.getEmployeeList();
+//        list1.add("1");
+        employee1.getEmployeeList().add("new member");
+
+        System.out.println("Employee: " + employee.getEmployeeList());
+        System.out.println("Employee 1: " + employee1.getEmployeeList());
     }
 }
 
