@@ -7,6 +7,7 @@ import jakarta.persistence.StoredProcedureQuery;
 import jakarta.transaction.Transactional;
 import java.util.Date;
 
+import org.example.pet.exception.ResourceNotFoundException;
 import org.example.pet.model.Shelter;
 import org.example.pet.repository.ShelterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class ShelterService {
     }
 
     public Shelter getShelterById(Integer id) {
-        return repo.findById(id).orElseThrow(() -> new RuntimeException("Shelter not found"));
+        return repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Shelter not found"));
     }
 
     public Shelter addShelter(Shelter s) {
@@ -40,7 +41,7 @@ public class ShelterService {
     }
 
     public Shelter updateShelter(Integer id, Shelter s) {
-        Shelter existing = repo.findById(id).orElseThrow(() -> new RuntimeException("Shelter not found"));
+        Shelter existing = repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Shelter not found"));
         existing.setName(s.getName());
         existing.setLocation(s.getLocation());
         existing.setCapacity(s.getCapacity());

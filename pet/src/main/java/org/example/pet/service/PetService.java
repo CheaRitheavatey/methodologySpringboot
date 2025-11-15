@@ -5,6 +5,7 @@ import jakarta.persistence.ParameterMode;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.StoredProcedureQuery;
 import jakarta.transaction.Transactional;
+import org.example.pet.exception.ResourceNotFoundException;
 import org.example.pet.model.Pet;
 import org.example.pet.repository.PetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,10 +59,15 @@ public class PetService {
     }
 
     public Object getPetByIdSPQ(Integer id) {
+        try {
         StoredProcedureQuery spq = em.createStoredProcedureQuery("getPetById");
         spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
         spq.setParameter("idIN", id);
         return spq.getSingleResult();
+
+        } catch (Exception ex) {
+            throw new ResourceNotFoundException("Pet id: " + id + "not found");
+        }
     }
 
     public void addPetSPQ(Pet p) {
@@ -81,6 +87,9 @@ public class PetService {
     }
 
     public void updatePetSPQ(Integer id, Pet p) {
+        if (!repo.existsById(id)) {
+            throw new ResourceNotFoundException("Pet id: " + id + "not found");
+        }
         StoredProcedureQuery spq = em.createStoredProcedureQuery("updatePet");
         spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
         spq.registerStoredProcedureParameter("nameIN", String.class, ParameterMode.IN);
@@ -99,6 +108,9 @@ public class PetService {
     }
 
     public void deletePetSPQ(Integer id) {
+        if (!repo.existsById(id)) {
+            throw new ResourceNotFoundException("Pet id: " + id + "not found");
+        }
         StoredProcedureQuery spq = em.createStoredProcedureQuery("deletePet");
         spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
         spq.setParameter("idIN", id);

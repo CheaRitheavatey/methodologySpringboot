@@ -1,6 +1,8 @@
 package org.example.pet.service;
 
 import lombok.AllArgsConstructor;
+import org.example.pet.exception.PetAlreadyAdoptException;
+import org.example.pet.exception.ResourceNotFoundException;
 import org.example.pet.model.Adoption;
 import org.example.pet.model.Pet;
 import org.example.pet.repository.AdoptionRepository;
@@ -23,15 +25,15 @@ public class AdoptionService {
     }
     // get adoption by id
     public Adoption getAdoptionById(Long id) throws Exception {
-        return adoptionRepository.findById(id).orElseThrow(() -> new Exception("adoption with id: " + id + " not found"));
+        return adoptionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("adoption with id: " + id + " not found"));
     }
     // add adoption
     public Adoption addAdoption(Adoption adoption) throws Exception {
-        Pet pet = petRepository.findById(adoption.getPet().getId()).orElseThrow(() -> new Exception("pet id: " + adoption.getPet().getId() + " not found"));
+        Pet pet = petRepository.findById(adoption.getPet().getId()).orElseThrow(() -> new ResourceNotFoundException("pet id: " + adoption.getPet().getId() + " not found"));
 
         // check if the pet avaiable to adopt
         if (pet.isAdopted()) {
-            throw new Exception("pet id " + pet.getId() + " name " + pet.getName() + " already adopted" );
+            throw new PetAlreadyAdoptException("pet id " + pet.getId() + " name " + pet.getName() + " already adopted" );
         }
 
         // set the pet as adopted
@@ -72,7 +74,7 @@ public class AdoptionService {
     // find all adoption for a specific pet
     public List<Adoption> findByPetId(Integer petId) throws Exception {
         if (!petRepository.existsById(petId)) {
-            throw new IllegalArgumentException("pet with id: " + petId + "not found");
+            throw new ResourceNotFoundException("pet with id: " + petId + "not found");
         }
         return adoptionRepository.findByPetId(petId);
     }
@@ -80,7 +82,7 @@ public class AdoptionService {
     // find adoption by date
     public List<Adoption> findByAdoptionDate(LocalDate adoptionDate) {
         if (adoptionDate == null) {
-            throw new IllegalArgumentException("Adoption date cannot be null");
+            throw new ResourceNotFoundException("Adoption date cannot be null");
         }
 
         return adoptionRepository.findByAdoptionDate(adoptionDate);
