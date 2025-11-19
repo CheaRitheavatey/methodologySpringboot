@@ -10,16 +10,21 @@ import designPattern.structural.adapter.Volt;
 import designPattern.structural.composite.Circle;
 import designPattern.structural.composite.DrawingComposite;
 import designPattern.structural.composite.Triangle;
+import designPattern.structural.facade.HelperFacade;
+import designPattern.structural.facade.MySqlHelper;
+import designPattern.structural.facade.OracleHelper;
 import designPattern.structural.flyweight.ClientDrawing;
 import designPattern.structural.proxy.CommandExecutor;
 import designPattern.structural.proxy.CommandExecutorProxy;
 
 
+import java.sql.Connection;
 import java.util.List;
 
 public class Main{
     public static void main(String[] args) {
-        testFlyWeight();
+        testFacade();
+//        testFlyWeight();
 //        testProxy();
 //        testComposite();
 //        testAdapter();
@@ -104,9 +109,26 @@ public class Main{
         }
 
     }
-        public static void testFlyWeight() {
-            ClientDrawing clientDrawing = new ClientDrawing(500,500);
-        }
+    public static void testFlyWeight() {
+        ClientDrawing clientDrawing = new ClientDrawing(500,500);
+    }
+
+    public static void testFacade() {
+        // before we have a facade
+        Connection mySqlConnection = MySqlHelper.getMySqlConnection();
+        MySqlHelper mySqlHelper = new MySqlHelper();
+        mySqlHelper.generateMySqlPDFReport("table1", mySqlConnection);
+
+        Connection oracleConnection = OracleHelper.getOracleConnection();
+        OracleHelper oracleHelper = new OracleHelper();
+        oracleHelper.generateOracleHTMLReport("table2", oracleConnection);
+
+        // after we have a facade
+        HelperFacade.generateReport(HelperFacade.DBType.ORACLE, HelperFacade.ReportType.PDF,"table1");
+        HelperFacade.generateReport(HelperFacade.DBType.MYSQL, HelperFacade.ReportType.HTML,"table2");
+    }
+
+
 }
 
 
