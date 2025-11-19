@@ -4,12 +4,26 @@ import designPattern.creatioinal.Computer;
 import designPattern.creatioinal.ComputerFactory;
 import designPattern.prototype.Employee;
 import designPattern.singleton.Singleton;
+import designPattern.structural.adapter.SocketAdapter;
+import designPattern.structural.adapter.SocketAdapterImplementation;
+import designPattern.structural.adapter.Volt;
+import designPattern.structural.composite.Circle;
+import designPattern.structural.composite.DrawingComposite;
+import designPattern.structural.composite.Triangle;
+import designPattern.structural.flyweight.ClientDrawing;
+import designPattern.structural.proxy.CommandExecutor;
+import designPattern.structural.proxy.CommandExecutorProxy;
+
 
 import java.util.List;
 
 public class Main{
     public static void main(String[] args) {
-        testPrototype();
+        testFlyWeight();
+//        testProxy();
+//        testComposite();
+//        testAdapter();
+//        testPrototype();
 //        testBuilder();
 //        testAbstractFactory();
 
@@ -56,6 +70,43 @@ public class Main{
         System.out.println("Employee: " + employee.getEmployeeList());
         System.out.println("Employee 1: " + employee1.getEmployeeList());
     }
+
+    public static void testAdapter() {
+        SocketAdapter socketAdapter = new SocketAdapterImplementation();
+
+        Volt v1 = socketAdapter.get3volt();
+        Volt v2 = socketAdapter.get12volt();
+        Volt v3 = socketAdapter.get120volt();
+
+        System.out.println("Volt 1: " + v1.getVolt());
+        System.out.println("Volt 2: " + v2.getVolt());
+        System.out.println("Volt 3: " + v3.getVolt());
+    }
+
+    public static void testComposite() {
+
+        designPattern.structural.composite.Shape triangle = new Triangle();
+        designPattern.structural.composite.Shape circle = new Circle();
+
+        DrawingComposite drawing = new DrawingComposite();
+        drawing.add(triangle);
+        drawing.add(circle);
+        drawing.draw("green");
+    }
+
+    public static void testProxy() {
+        CommandExecutor executor = new CommandExecutorProxy("admin", "correct");
+        try {
+            executor.runCommand("ls -ltr");
+            executor.runCommand("rm -rf abc.pd");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+    }
+        public static void testFlyWeight() {
+            ClientDrawing clientDrawing = new ClientDrawing(500,500);
+        }
 }
 
 
