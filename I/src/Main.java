@@ -7,6 +7,10 @@ import designPattern.singleton.Singleton;
 import designPattern.structural.adapter.SocketAdapter;
 import designPattern.structural.adapter.SocketAdapterImplementation;
 import designPattern.structural.adapter.Volt;
+import designPattern.structural.bridge.Color;
+import designPattern.structural.bridge.GreenColor;
+import designPattern.structural.bridge.Pentagon;
+import designPattern.structural.bridge.RedColor;
 import designPattern.structural.composite.Circle;
 import designPattern.structural.composite.DrawingComposite;
 import designPattern.structural.composite.Triangle;
@@ -23,11 +27,13 @@ import java.util.List;
 
 public class Main{
     public static void main(String[] args) {
-        testFacade();
+        testBridge();
+//        testFacade();
 //        testFlyWeight();
 //        testProxy();
 //        testComposite();
 //        testAdapter();
+
 //        testPrototype();
 //        testBuilder();
 //        testAbstractFactory();
@@ -128,6 +134,14 @@ public class Main{
         HelperFacade.generateReport(HelperFacade.DBType.MYSQL, HelperFacade.ReportType.HTML,"table2");
     }
 
+    public static void testBridge() {
+        designPattern.structural.bridge.Shape triangle = new designPattern.structural.bridge.Triangle(new RedColor());
+        designPattern.structural.bridge.Shape pentagon = new Pentagon(new GreenColor());
+
+        triangle.applyColor();
+        pentagon.applyColor();
+
+    }
 
 }
 
