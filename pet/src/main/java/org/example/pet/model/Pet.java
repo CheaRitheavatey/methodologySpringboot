@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Entity
 @Data
 @Table(name = "pet")
-@AllArgsConstructor
+//@AllArgsConstructor
 //@NamedQueries({
 //        @NamedQuery(name = "pet.findAll", query = "SELECT p FROM pet p"),
 //        @NamedQuery(name = "pet.findById", query = "SELECT p FROM pet p WHERE p.id = :id"),

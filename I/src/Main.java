@@ -1,5 +1,10 @@
 import designPattern.abstractFactory.PCFactory;
 import designPattern.abstractFactory.ServerFactory;
+import designPattern.behavorial.chainnotresponsible.ATMDispenseChain;
+import designPattern.behavorial.chainnotresponsible.Currency;
+import designPattern.behavorial.mediator.*;
+import designPattern.behavorial.template.GlassHouse;
+import designPattern.behavorial.template.WoodenHouse;
 import designPattern.creatioinal.Computer;
 import designPattern.creatioinal.ComputerFactory;
 import designPattern.prototype.Employee;
@@ -7,13 +12,16 @@ import designPattern.singleton.Singleton;
 import designPattern.structural.adapter.SocketAdapter;
 import designPattern.structural.adapter.SocketAdapterImplementation;
 import designPattern.structural.adapter.Volt;
-import designPattern.structural.bridge.Color;
 import designPattern.structural.bridge.GreenColor;
 import designPattern.structural.bridge.Pentagon;
 import designPattern.structural.bridge.RedColor;
 import designPattern.structural.composite.Circle;
 import designPattern.structural.composite.DrawingComposite;
 import designPattern.structural.composite.Triangle;
+import designPattern.structural.decorator.BasicCar;
+import designPattern.structural.decorator.Car;
+import designPattern.structural.decorator.LuxuryCar;
+import designPattern.structural.decorator.SportCar;
 import designPattern.structural.facade.HelperFacade;
 import designPattern.structural.facade.MySqlHelper;
 import designPattern.structural.facade.OracleHelper;
@@ -23,11 +31,16 @@ import designPattern.structural.proxy.CommandExecutorProxy;
 
 
 import java.sql.Connection;
-import java.util.List;
+import java.util.Scanner;
 
 public class Main{
     public static void main(String[] args) {
-        testBridge();
+        testChainotResponsibility();
+//        testMediator();
+//        testTemplate();
+//        testDecorator();
+
+//        testBridge();
 //        testFacade();
 //        testFlyWeight();
 //        testProxy();
@@ -140,6 +153,60 @@ public class Main{
 
         triangle.applyColor();
         pentagon.applyColor();
+
+    }
+    public static void testDecorator() {
+        Car c = new BasicCar();
+        c.assemble(); // this is the basic car
+        System.out.println("----------------------");
+
+        Car sportCar = new SportCar(new BasicCar());
+        sportCar.assemble(); // this is the sport car feature
+        System.out.println("----------------------");
+
+        Car luxuryCar = new LuxuryCar(new BasicCar());
+        luxuryCar.assemble();
+    }
+
+    public static void testTemplate() {
+        WoodenHouse woodenHouse = new WoodenHouse();
+        woodenHouse.buildHouse();
+        System.out.println("----------------------");
+
+        GlassHouse glassHouse = new GlassHouse();
+        glassHouse.buildHouse();
+    }
+
+    public static void testMediator() {
+        ChatMediator mediator = new ChatMediatorImplementation();
+        User u1 = new UserImplementation(mediator, "Joe");
+        User u2 = new UserImplementation(mediator, "Sarah");
+        User u3 = new UserImplementation(mediator, "James");
+
+        mediator.addUser(u1);
+        mediator.addUser(u2);
+        mediator.addUser(u3);
+
+        u1.send("hi this is joe, how are you doing?");
+        u2.send("hi joe, its sarah, im doing good");
+    }
+
+    public static void testChainotResponsibility() {
+        Scanner scanner = new Scanner(System.in);
+
+        ATMDispenseChain atm = new ATMDispenseChain();
+        int amount = 1;
+        boolean notAccept = true;
+        while (notAccept) {
+            if (amount % 10 != 0 || amount == 0) {
+                System.out.println("amount should be multiple of 10 \nEnter amount to dispences");
+                amount = scanner.nextInt();
+            } else {
+                notAccept = false;
+            }
+
+        }
+            atm.d1.dispenseCurrency(new Currency(amount));
 
     }
 
