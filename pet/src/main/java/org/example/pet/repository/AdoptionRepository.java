@@ -11,10 +11,10 @@ import java.util.List;
 @Repository
 public interface AdoptionRepository extends JpaRepository<Adoption, Long> {
     // count how many pet this adopter adopted
-//    int countByAdopter_Id(Long adopterId);
+    int countByAdopter_Id(Long adopterId);
 
     // find all adoption for speicifc adopter
-//    List<Adoption> findByAdopterId(Long adopterId);
+    List<Adoption> findByAdopterId(Integer adopterId);
 
     // find all adoption for a specific pet
     List<Adoption> findByPetId(Integer petId);

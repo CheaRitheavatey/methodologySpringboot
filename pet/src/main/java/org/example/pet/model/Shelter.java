@@ -1,24 +1,25 @@
 package org.example.pet.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import jakarta.xml.bind.annotation.XmlRootElement;
+import org.antlr.v4.runtime.misc.NotNull;
+//import jakarta.validation.constraints.NotNull;
+//import jakarta.validation.constraints.Size;
+//import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "shelter")
-@XmlRootElement
-@NamedQueries({
-        @NamedQuery(name = "Shelter.findAll", query = "SELECT s FROM Shelter s"),
-        @NamedQuery(name = "Shelter.findById", query = "SELECT s FROM Shelter s WHERE s.id = :id"),
-        @NamedQuery(name = "Shelter.findByName", query = "SELECT s FROM Shelter s WHERE s.name = :name"),
-        @NamedQuery(name = "Shelter.findByLocation", query = "SELECT s FROM Shelter s WHERE s.location = :location"),
-        @NamedQuery(name = "Shelter.findByCapacity", query = "SELECT s FROM Shelter s WHERE s.capacity = :capacity"),
-        @NamedQuery(name = "Shelter.findByPhone", query = "SELECT s FROM Shelter s WHERE s.phone = :phone"),
-        @NamedQuery(name = "Shelter.findByCreationday", query = "SELECT s FROM Shelter s WHERE s.creationday = :creationday")})
+//@XmlRootElement
+//@NamedQueries({
+//        @NamedQuery(name = "Shelter.findAll", query = "SELECT s FROM Shelter s"),
+//        @NamedQuery(name = "Shelter.findById", query = "SELECT s FROM Shelter s WHERE s.id = :id"),
+//        @NamedQuery(name = "Shelter.findByName", query = "SELECT s FROM Shelter s WHERE s.name = :name"),
+//        @NamedQuery(name = "Shelter.findByLocation", query = "SELECT s FROM Shelter s WHERE s.location = :location"),
+//        @NamedQuery(name = "Shelter.findByCapacity", query = "SELECT s FROM Shelter s WHERE s.capacity = :capacity"),
+//        @NamedQuery(name = "Shelter.findByPhone", query = "SELECT s FROM Shelter s WHERE s.phone = :phone"),
+//        @NamedQuery(name = "Shelter.findByCreationday", query = "SELECT s FROM Shelter s WHERE s.creationday = :creationday")})
 public class Shelter implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -27,16 +28,16 @@ public class Shelter implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 100)
+//    @Size(max = 100)
     @Column(name = "name")
     private String name;
-    @Size(max = 100)
+//    @Size(max = 100)
     @Column(name = "location")
     private String location;
     @Column(name = "capacity")
     private Integer capacity;
     // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
-    @Size(max = 20)
+//    @Size(max = 20)
     @Column(name = "phone")
     private String phone;
     @Basic(optional = false)
@@ -125,10 +126,15 @@ public class Shelter implements Serializable {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "pte.pawpal.hu.model.Shelter[ id=" + id + " ]";
-    }
+//    @Override
+//    public String toString() {
+//        return "pte.pawpal.hu.model.Shelter[ id=" + id + " ]";
+//    }
+        @Override
+        public String toString() {
+            return "Shelter{id=" + id + "}";
+        }
+
 
 }
 

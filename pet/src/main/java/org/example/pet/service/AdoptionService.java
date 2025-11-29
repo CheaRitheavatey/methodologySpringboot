@@ -5,6 +5,7 @@ import org.example.pet.exception.PetAlreadyAdoptException;
 import org.example.pet.exception.ResourceNotFoundException;
 import org.example.pet.model.Adoption;
 import org.example.pet.model.Pet;
+import org.example.pet.repository.AdopterRepository;
 import org.example.pet.repository.AdoptionRepository;
 import org.example.pet.repository.PetRepository;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ import java.util.List;
 public class AdoptionService {
     private AdoptionRepository adoptionRepository;
     private PetRepository petRepository;
-//    private AdopterRepository adopterRepository;
+    private AdopterRepository adopterRepository;
 
     // get all adoption
     public List<Adoption> getAllAdoption() {
@@ -58,18 +59,18 @@ public class AdoptionService {
         adoptionRepository.deleteById(id);
     }
     // count how many pet the adopter has
-//    public int countAdoptionsByAdopter(Long id) {
-//        return adoptionRepository.countByAdopter_Id(id);
-//    }
+    public int countAdoptionsByAdopter(Long id) {
+        return adoptionRepository.countByAdopter_Id(id);
+    }
 
     // find all adoption for speicifc adopter
-//    public List<Adoption> findByAdopterId(Long adopterId) throws Exception {
-//        if (!adopterRepository.existsById(adopterId)) {
-//            throw new IllegalArgumentException("adopter with id: " + adopterId + " not found");
-//        }
-//
-//        return adoptionRepository.findByAdopterId(adopterId);
-//    }
+    public List<Adoption> findByAdopterId(Integer adopterId) throws Exception {
+        if (!adopterRepository.existsById(adopterId)) {
+            throw new IllegalArgumentException("adopter with id: " + adopterId + " not found");
+        }
+
+        return adoptionRepository.findByAdopterId(adopterId);
+    }
 
     // find all adoption for a specific pet
     public List<Adoption> findByPetId(Integer petId) throws Exception {

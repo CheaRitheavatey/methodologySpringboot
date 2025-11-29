@@ -13,5 +13,5 @@ public interface ShelterRepository extends JpaRepository<Shelter, Integer> {
 //    List<Shelter> findByShelterNameContainingIgnoreCase(String keyword);
     List<Shelter> findByNameContainingIgnoreCase(String name);
 
-    public List<Shelter> findByNameContaining(String keyword);
+    List<Shelter> findByNameContaining(String keyword);
 }

@@ -21,9 +21,9 @@ public class Adoption {
     @JoinColumn(name = "pet_id")
     private Pet pet;
 
-//    @ManyToOne(optional = false)
-//    @JoinColumn(name = "adopter_id")
-//    private Adopter adopter;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "adopter_id")
+    private Adopter adopter;
 
     private LocalDate adoptionDate;
 }

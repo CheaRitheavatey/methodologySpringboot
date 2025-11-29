@@ -28,16 +28,16 @@ public class AdoptionController {
         return ResponseEntity.ok(adoptionService.getAdoptionById(id));
     }
     // GET how many pet has adopted
-//    @GetMapping(path = "/count/{adopterId}")
-//    public ResponseEntity<Integer> getCountAdoptionByAdopter(@PathVariable Long adopterId) {
-//        return ResponseEntity.ok(adoptionService.countAdoptionsByAdopter(adopterId));
-//    }
+    @GetMapping(path = "/count/{adopterId}")
+    public ResponseEntity<Integer> getCountAdoptionByAdopter(@PathVariable Long adopterId) {
+        return ResponseEntity.ok(adoptionService.countAdoptionsByAdopter(adopterId));
+    }
 
     // GET all adoption that adopter made
-//    @GetMapping(path = "/adopter/{id}")
-//    public ResponseEntity<List<Adoption>> findByAdopterId(@PathVariable Long id) throws Exception {
-//        return ResponseEntity.ok(adoptionService.findByAdopterId(id));
-//    }
+    @GetMapping(path = "/adopter/{id}")
+    public ResponseEntity<List<Adoption>> findByAdopterId(@PathVariable Integer id) throws Exception {
+        return ResponseEntity.ok(adoptionService.findByAdopterId(id));
+    }
 
     // find all adoption that pet have gone through
     @GetMapping(path = "/pet/{id}")
