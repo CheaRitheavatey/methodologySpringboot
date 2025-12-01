@@ -1,0 +1,42 @@
+Dec 01, 2025 8:17:28 PM Practice.LogFile main
+CONFIG: You are logging: 1
+Dec 01, 2025 8:17:28 PM Practice.LogFile main
+CONFIG: You are logging: 2
+Dec 01, 2025 8:17:28 PM Practice.LogFile main
+CONFIG: You are logging: 3
+Dec 01, 2025 8:17:28 PM Practice.LogFile main
+CONFIG: You are logging: 4
+Dec 01, 2025 8:17:28 PM Practice.LogFile main
+CONFIG: You are logging: 5
+Dec 01, 2025 8:17:28 PM Practice.LogFile main
+CONFIG: You are logging: 6
+Dec 01, 2025 8:17:28 PM Practice.LogFile main
+CONFIG: You are logging: 7
+Dec 01, 2025 8:17:28 PM Practice.LogFile main
+CONFIG: You are logging: 8
+Dec 01, 2025 8:17:28 PM Practice.LogFile main
+CONFIG: You are logging: 9
+Dec 01, 2025 8:17:28 PM Practice.LogFile main
+CONFIG: You are logging: 10
+Dec 01, 2025 8:17:28 PM Practice.LogFile main
+CONFIG: You are logging: 11
+Dec 01, 2025 8:17:28 PM Practice.LogFile main
+CONFIG: You are logging: 12
+Dec 01, 2025 8:17:28 PM Practice.LogFile main
+CONFIG: You are logging: 13
+Dec 01, 2025 8:17:28 PM Practice.LogFile main
+CONFIG: You are logging: 14
+Dec 01, 2025 8:17:28 PM Practice.LogFile main
+CONFIG: You are logging: 15
+Dec 01, 2025 8:17:28 PM Practice.LogFile main
+CONFIG: You are logging: 16
+Dec 01, 2025 8:17:28 PM Practice.LogFile main
+CONFIG: You are logging: 17
+Dec 01, 2025 8:17:28 PM Practice.LogFile main
+CONFIG: You are logging: 18
+Dec 01, 2025 8:17:28 PM Practice.LogFile main
+CONFIG: You are logging: 19
+Dec 01, 2025 8:17:28 PM Practice.LogFile main
+CONFIG: You are logging: 20
+Dec 01, 2025 8:17:28 PM Practice.LogFile main
+INFO: Loop finished successfully
