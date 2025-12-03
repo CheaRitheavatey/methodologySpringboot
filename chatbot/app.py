@@ -2,7 +2,7 @@ import os
 import pdfplumber
 
 PDF_FOLDER = "pdfs"
-CHUNK_SIZE = 600  
+CHUNK_SIZE = 1000
 
      
 

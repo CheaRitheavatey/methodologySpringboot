@@ -1,106 +1,71 @@
 import os
-from langchain_community.document_loaders import PyPDFLoader
-import langchain
-# from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_chroma import Chroma
-from langchain_community.llms import LlamaCpp
-# from langchain.chains import RetrievalQA
+import PyPDF2
+from sentence_transformers import SentenceTransformer, util
 
-PDF_FOLDER = "pdfs"
-CHROMA_DIR = "chroma_db"
-MODEL_PATH = "D:\Documents\GitHub\methodologySpringboot\chatbot\models\Llama-3-3B-Instruct-Q4_K_M.gguf" 
+model = SentenceTransformer("all-MiniLM-L6-v2")
 
-def load_pdfs(folder_path):
-    docs = []
+def load_all_pdfs():
+    folder_path = "pdfs/"
+    pdf_data = []
+
     for filename in os.listdir(folder_path):
         if filename.lower().endswith(".pdf"):
-            path = os.path.join(folder_path, filename)
-            loader = PyPDFLoader(path)
-            # metadata will include source = path, so we know which PDF
-            docs.extend(loader.load())
-    return docs
+            full_path = os.path.join(folder_path, filename)
+            try:
+                with open(full_path, "rb") as f:
+                    reader = PyPDF2.PdfReader(f)
+                    text = ""
+                    for page in reader.pages:
+                        page_text = page.extract_text()
+                        if page_text:
+                            text += page_text + "\n"
 
-def build_vectorstore(docs):
-    splitter = langchain.RecursiveCharacterTextSplitter(
-        chunk_size=1000,
-        chunk_overlap=200
-    )
-    chunks = splitter.split_documents(docs)
+                    sentences = [s.strip() for s in text.split(".") if s.strip()]
+                    pdf_data.append((filename, sentences))
 
-    embeddings = HuggingFaceEmbeddings(
-        model_name="sentence-transformers/all-MiniLM-L6-v2"
-    )
+            except:
+                print(f"Could not read {filename}")
 
-    vectordb = Chroma.from_documents(
-        documents=chunks,
-        embedding=embeddings,
-        persist_directory=CHROMA_DIR
-    )
-    return vectordb
+    return pdf_data
 
-def load_vectorstore():
-    embeddings = HuggingFaceEmbeddings(
-        model_name="sentence-transformers/all-MiniLM-L6-v2"
-    )
-    vectordb = Chroma(
-        embedding_function=embeddings,
-        persist_directory=CHROMA_DIR
-    )
-    return vectordb
 
-def init_llm():
-    llm = LlamaCpp(
-        model_path=MODEL_PATH,
-        n_ctx=4096,
-        temperature=0.2,
-        n_threads=8,      # adjust to your CPU
-        n_gpu_layers=0    # set >0 if you have GPU support
-    )
-    return llm
+def semantic_search(pdf_data, question):
+    question_embedding = model.encode(question, convert_to_tensor=True)
+    results = []
 
-def build_qa_chain(vectordb, llm):
-    retriever = vectordb.as_retriever(search_kwargs={"k": 4})
-    qa = langchain.RetrievalQA.from_chain_type(
-        llm=llm,
-        chain_type="stuff",
-        retriever=retriever,
-        return_source_documents=True,
-    )
-    return qa
+    for filename, sentences in pdf_data:
+        for sentence in sentences:
+            sent_emb = model.encode(sentence, convert_to_tensor=True)
+            score = util.pytorch_cos_sim(question_embedding, sent_emb).item()
+            results.append((score, filename, sentence))
+
+    # sort by most relevant
+    results.sort(reverse=True, key=lambda x: x[0])
+    return results[:5]   # return top 5 answers
+
 
 def main():
-    # Build or load Chroma index
-    if not os.path.exists(CHROMA_DIR) or not os.listdir(CHROMA_DIR):
-        print("No existing Chroma DB found. Ingesting PDFs...")
-        docs = load_pdfs(PDF_FOLDER)
-        vectordb = build_vectorstore(docs)
-        print("Ingestion complete.")
-    else:
-        print("Loading existing Chroma DB...")
-        vectordb = load_vectorstore()
+    while(True):
+        # folder = input("Enter folder path with PDFs: ")
+        question = input("Enter your question: ")
 
-    llm = init_llm()
-    qa_chain = build_qa_chain(vectordb, llm)
+        print("\nLoading PDFs...")
+        pdf_data = load_all_pdfs()
 
-    print("PDF LLM chat ready. Type 'exit' to quit.")
-    while True:
-        query = input("\nYou: ").strip()
-        if query.lower() in ("exit", "quit", "q"):
+        print("Searching...\n")
+        top_results = semantic_search(pdf_data, question)
+
+        for score, filename, sentence in top_results:
+            print(f"📄 File: {filename}")
+            print(f"➡️  {sentence}")
+            print(f"Score: {round(score, 3)}\n")
+            
+        again = input("Do you want to ask again? (y/n)")
+        if again.lower() == 'y':
+            continue
+        else:
             break
 
-        result = qa_chain({"query": query})
-        answer = result["result"]
-        sources = result.get("source_documents", [])
-
-        print("\nAssistant:", answer)
-        if sources:
-            print("\nSources:")
-            for i, doc in enumerate(sources, start=1):
-                print(f"- {i}. {doc.metadata.get('source')}")
 
 if __name__ == "__main__":
-    if not os.path.isdir(PDF_FOLDER):
-        print(f"Folder '{PDF_FOLDER}' not found. Create it and put your PDFs inside.")
-    else:
-        main()
+    main()

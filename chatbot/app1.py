@@ -1,27 +1,63 @@
-import torch
-from langchain.document_loaders import PyPDFLoader
-from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.vectorstores import Chroma
-from langchain.llms import LlamaCpp
-from langchain.memory import ConversationBufferMemory
-from langchain.chains import ConversationalRetrievalChain
+import os
+import PyPDF2
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-loader = PyPDFLoader(file_path="pdfs/week1")
+def load_all_pdfs():
+    folder_path = "pdfs/"
+    """Load text from all PDFs inside a folder."""
+    pdf_texts = {}
 
-data = loader.load()
-text_spliter = RecursiveCharacterTextSplitter(chunk_size=10000, chunk_overlap=200)
-text_chuncks = text_spliter.split_documents(data)
+    for filename in os.listdir(folder_path):
+        if filename.lower().endswith(".pdf"):
+            full_path = os.path.join(folder_path, filename)
 
-# initalize large language model
-llm_naswer_gen = LlamaCpp(
-    streaming=True, 
-    model_path="./mistral-7b-openorca.Q4_0.gguf", 
-    temperature =0.75, top_p=1, f16_kv=True,
-    verbose=False,
-    n_ctx=4096
-    )
+            try:
+                with open(full_path, "rb") as f:
+                    reader = PyPDF2.PdfReader(f)
+                    text = ""
+                    for page in reader.pages:
+                        page_text = page.extract_text()
+                        if page_text:
+                            text += page_text + "\n"
+
+                    pdf_texts[filename] = text
+            except:
+                print(f"Could not read {filename}")
+
+    return pdf_texts
 
 
-# embedding
-embedding = HuggingFaceEmbeddings(model_name=)
+def answer_question(pdf_texts, query):
+    """Search all PDFs and return file + matching sentences."""
+    results = []
+
+    for filename, text in pdf_texts.items():
+        sentences = text.split(".")
+        for s in sentences:
+            if query.lower() in s.lower():
+                results.append((filename, s.strip()))
+
+    return results
+
+
+def main():
+    # folder = input("Enter folder path containing your PDFs: ")
+    query = input("Enter your question or keyword: ")
+
+    print("\nLoading PDFs...")
+    pdf_texts = load_all_pdfs()
+
+    print("Searching...\n")
+    matches = answer_question(pdf_texts, query)
+
+    if matches:
+        print(f"🔎 Found {len(matches)} results:\n")
+        for filename, sentence in matches:
+            print(f"📄 File: {filename}")
+            print(f"➡️  {sentence}")
+            print()
+    else:
+        print("❌ No matches found.")
+
+
+if __name__ == "__main__":
+    main()
