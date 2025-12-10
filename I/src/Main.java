@@ -1,3 +1,5 @@
+import Practice.InvalidStudentException;
+import Practice.Student;
 import designPattern.abstractFactory.PCFactory;
 import designPattern.abstractFactory.ServerFactory;
 import designPattern.behavorial.chainnotresponsible.ATMDispenseChain;
@@ -35,7 +37,10 @@ import java.util.Scanner;
 
 public class Main{
     public static void main(String[] args) {
-        testChainotResponsibility();
+//        home practice
+        testStudentBuilderPractice();
+
+//        testChainotResponsibility();
 //        testMediator();
 //        testTemplate();
 //        testDecorator();
@@ -74,7 +79,9 @@ public class Main{
     }
 
     private static void testBuilder() {
-        designPattern.builder.Computer c = new designPattern.builder.Computer.ComputerBuilder("10 GB", "128 GB").setGraphiccardEnable(true).build();
+        designPattern.builder.Computer c = new designPattern.builder.Computer.ComputerBuilder("10 GB", "128 GB")
+                .setGraphiccardEnable(true)
+                .build();
 
         System.out.println(c.getRam());
         System.out.println(c.isGraphiccardEnable());
@@ -208,6 +215,23 @@ public class Main{
         }
             atm.d1.dispenseCurrency(new Currency(amount));
 
+    }
+
+    public static void testStudentBuilderPractice() {
+        try {
+            Student student = new Student.StudentBuilder()
+                    .setName("Alice")
+                    .setEmail("alice@exampple.com")
+                    .setMajor("CS")
+                    .build();
+
+            System.out.println(student.getAge());
+            System.out.println(student.getName());
+            System.out.println(student.getEmail());
+            System.out.println(student.getMajor());
+        } catch (InvalidStudentException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 }

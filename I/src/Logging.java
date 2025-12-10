@@ -48,6 +48,8 @@ public class Logging {
         } catch (IOException ex) {
             logger.log(Level.INFO,"something went wrong", ex);
         }
+
+
     }
 
     // exercise 1

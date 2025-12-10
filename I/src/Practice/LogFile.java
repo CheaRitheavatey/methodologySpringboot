@@ -34,6 +34,8 @@ public class LogFile {
 
 
     }
+
+    // exercise 1
     public static void exercise1() {
        try {
            FileHandler fileHandler = new FileHandler("Logging.txt");
@@ -50,4 +52,11 @@ public class LogFile {
            throw new RuntimeException(e);
        }
     }
+
+//    // exercise 2
+//    public static void exercise2(LogLevel level, String message) {
+//        try {
+//
+//        }
+//    }
 }
