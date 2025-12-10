@@ -31,5 +31,23 @@ public class LogFile {
             logger.log(Level.ALL, "something went wrong", e);
         }
 
+
+
+    }
+    public static void exercise1() {
+       try {
+           FileHandler fileHandler = new FileHandler("Logging.txt");
+           fileHandler.setFormatter(new SimpleFormatter());
+           logger.addHandler(fileHandler);
+           logger.setLevel(Level.CONFIG);
+
+           for (int i = 1; i <= 20; i++) {
+               logger.config("You are logging: " + i);
+           }
+           logger.info("Loop finished succesfully");
+
+       } catch (IOException e) {
+           throw new RuntimeException(e);
+       }
     }
 }

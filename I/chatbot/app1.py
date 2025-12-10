@@ -27,7 +27,6 @@ def load_all_pdfs():
 
 
 def answer_question(pdf_texts, query):
-    """Search all PDFs and return file + matching sentences."""
     results = []
 
     for filename, text in pdf_texts.items():

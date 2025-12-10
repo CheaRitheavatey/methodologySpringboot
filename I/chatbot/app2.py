@@ -5,7 +5,10 @@ from sentence_transformers import SentenceTransformer, util
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
 def load_all_pdfs():
+    # folder path
     folder_path = "pdfs/"
+    
+    # sotre in dict
     pdf_data = []
 
     for filename in os.listdir(folder_path):
