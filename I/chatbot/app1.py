@@ -39,23 +39,30 @@ def answer_question(pdf_texts, query):
 
 
 def main():
-    # folder = input("Enter folder path containing your PDFs: ")
-    query = input("Enter your question or keyword: ")
+    while True:
+        # folder = input("Enter folder path containing your PDFs: ")
+        query = input("Enter your question or keyword: ")
 
-    print("\nLoading PDFs...")
-    pdf_texts = load_all_pdfs()
+        print("\nLoading PDFs...")
+        pdf_texts = load_all_pdfs()
 
-    print("Searching...\n")
-    matches = answer_question(pdf_texts, query)
+        print("Searching...\n")
+        matches = answer_question(pdf_texts, query)
 
-    if matches:
-        print(f"🔎 Found {len(matches)} results:\n")
-        for filename, sentence in matches:
-            print(f"📄 File: {filename}")
-            print(f"➡️  {sentence}")
-            print()
-    else:
-        print("❌ No matches found.")
+        if matches:
+            print(f"🔎 Found {len(matches)} results:\n")
+            for filename, sentence in matches:
+                print(f"📄 File: {filename}")
+                print(f"➡️  {sentence}")
+                print()
+        else:
+            print("❌ No matches found.")
+            
+        again = input("do you want to do it again? (y/n): ")
+        if again.lower() == "y":
+            continue
+        else:
+            break
 
 
 if __name__ == "__main__":
